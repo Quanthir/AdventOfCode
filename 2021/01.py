@@ -1,6 +1,6 @@
 depths = ""
 
-with open("01.txt") as f:
+with open("2021/01.txt") as f:
     depths = [int(i) for i in f.read().split()]
 
 def p1_solution_1(d):
