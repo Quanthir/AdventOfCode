@@ -1,4 +1,6 @@
 solution = """
+#!/usr/bin/env python
+
 class Solution:
     input: str
     year = <year>
@@ -18,4 +20,9 @@ class Solution:
 
     def part2(self):
         pass
+
+if __name__ == '__main__':
+    s = Solution()
+    print(f'AoC [{s.year} - Day {s.day}] Part 1: {s.part1}')
+    print(f'AoC [{s.year} - Day {s.day}] Part 2: {s.part2}')
 """
