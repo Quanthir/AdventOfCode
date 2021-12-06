@@ -16,8 +16,7 @@ def solution1(fishes, days=80):
     return sum(1 for x in fishes if x < 9)
 
 def solution2(data: list, days: int) -> int:
-    s = ''.join(data)
-    f = [*map(s.count, '012345678')]
+    f = [*map(data.count, '012345678')]
 
     for _ in range(days):
         f = f[1:] + f[:1]
