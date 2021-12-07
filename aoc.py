@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 from os import error, mkdir
 import os
