@@ -1,4 +1,4 @@
-solution = """#!/usr/bin/env python
+solution = """#!/usr/bin/env python3
 
 class Solution:
     year = <year>
