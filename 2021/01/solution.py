@@ -17,8 +17,7 @@ class Solution:
 
 
     def part1(self, data=None):
-        if data is None:
-            data = self.data
+        if data is None: data = self.data
         return sum(data[i + 1] > data[i] for i in range(len(data) - 1))
 
 
