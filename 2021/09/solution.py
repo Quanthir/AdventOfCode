@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from math import prod
+
 class Solution:
     year = 2021
     day = 9
@@ -13,38 +15,33 @@ class Solution:
 
 
     def prepare_data(self):
-        self.data = self.input.split("\n")
-        self.data = {(y, x): int(self.data[y][x]) for y in range(len(self.data)) for x in range(len(self.data[y]))}
+        self.data = {(x, y): int(d) for y, line in enumerate(self.input.split("\n"))
+                                    for x, d in enumerate(line.strip())}
+
+
+    def neighbours(self, x, y):
+        return filter(lambda n: n in self.data, [(x, y-1), (x, y+1), (x-1,y), (x+1,y)])
+
+
+    def is_low(self, key):
+        return all(self.data[key] < self.data[n] for n in self.neighbours(*key))
 
 
     def part1(self):
-        lowp = []
-        for c, x in self.data.items():
-            print(c[0], c[1], x)
-        # for y in range(len(self.data)):
-        #     for x in range(len(self.data[y])):
-        #         adj = []
-        #         if y > 0:
-        #             adj.append(self.data[y - 1][x])
-        #         if x > 0:
-        #             adj.append(self.data[y][x - 1])
-        #         if y < len(self.data) - 1:
-        #             adj.append(self.data[y + 1][x])
-        #         if x < len(self.data[y]) - 1:
-        #             adj.append(self.data[y][x + 1])
-                
-        #         if self.data[y][x] < min(adj):
-        #             lowp.append(self.data[y][x] + 1)
-
-        return sum(lowp)
+        lowp = list(filter(self.is_low, self.data))
+        return sum(self.data[key] + 1 for key in lowp)
 
 
-    def countFlow(self, y, x, checked = []):
-        low = self.data[y][x] - 1
-        high = self.data[y][x] + 1
+    def count(self, key):
+        if self.data[key] == 9: return 0
+        del self.data[key]
+        return 1 + sum(map(self.count, self.neighbours(*key)))
+
 
     def part2(self):
-        pass
+        lowp = list(filter(self.is_low, self.data))
+        basins = [self.count(key) for key in lowp]
+        return prod(sorted(basins)[-3:])
 
 
 if __name__ == '__main__':
