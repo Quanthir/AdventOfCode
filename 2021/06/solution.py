@@ -13,15 +13,25 @@ class Solution:
 
 
     def prepare_data(self):
-        pass
+        self.data = [int(x) for x in self.input.split(',')]
+
+
+    def solution(self, days: int) -> int:
+        f = [*map(self.input.count, '012345678')]
+
+        for _ in range(days):
+            f = f[1:] + f[:1]
+            f[6] += f[-1]
+
+        return sum(f)
 
 
     def part1(self):
-        pass
+        return self.solution(80)
 
 
     def part2(self):
-        pass
+        return self.solution(256)
 
 
 if __name__ == '__main__':
