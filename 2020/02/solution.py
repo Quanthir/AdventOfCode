@@ -2,7 +2,7 @@
 
 class Solution:
     year = 2020
-    day = 1
+    day = 2
     input: str
     data: list
     
@@ -13,19 +13,15 @@ class Solution:
 
 
     def prepare_data(self):
-        self.data = [int(x) for x in self.input.split("\n")]
+        pass
 
 
     def part1(self):
-        return next(x * y for x in self.data for y in self.data if x + y == 2020)
+        pass
 
 
     def part2(self):
-        return next(
-            x * y * z
-            for x in self.data for y in self.data for z in self.data
-            if x + y + z == 2020
-        )
+        pass
 
 
 if __name__ == '__main__':
