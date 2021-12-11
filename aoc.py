@@ -62,8 +62,13 @@ def create_new_day(year, day):
     
     return True, f'{tc.BLUE} {day_dir}{tc.ENDC} folder has been created and ready to use.'
         
-def run(year, day):
+def run(year, day, parser):
     _, folder = get_dir(year, day)
+
+    if not os.path.isdir(folder):
+        parser.error(f'Directory does not exists: {folder}')
+        return
+
     mod = import_module(f'{year}.{str(day).zfill(2)}.solution', __name__)
     klass = getattr(mod, 'Solution')
     solution = klass(folder)
@@ -79,6 +84,7 @@ def info(year, day, parser):
     _, folder = get_dir(year, day)
     if not os.path.isdir(folder):
         parser.error(f'Directory does not exists: {folder}')
+        return
     
     with open(f'{folder}/challenge.txt') as f:
         print(f.read())
@@ -111,7 +117,7 @@ def main():
         return
     
     if args.run:
-        run(args.year, args.day)
+        run(args.year, args.day, parser)
         return
     
     if args.info:
