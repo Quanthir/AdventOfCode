@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-from collections import namedtuple
-
-Inst = namedtuple('Inst', ['Cmd', 'Val'])
 
 class Solution:
     year = 2020
@@ -19,27 +16,68 @@ class Solution:
         self.data = [{'c': line[:3], 'v': int(line[4:])} for line in self.input.split("\n")]
 
     def part1(self):
-        visited = []
         acc = 0
-        i = 0
-        while i < len(self.data):
-            if i in visited:
+        line = 0
+        visited = []
+        while line < len(self.data):
+            if line in visited:
                 break
 
-            visited.append(i)
+            visited.append(line)
 
-            if self.data[i]['c'] == 'acc':
-                acc += self.data[i]['v']
+            if self.data[line]['c'] == 'acc':
+                acc += self.data[line]['v']
             
-            if self.data[i]['c'] == 'jmp':
-                i += self.data[i]['v']
+            if self.data[line]['c'] == 'jmp':
+                line += self.data[line]['v']
             else:
-                i += 1
-        
+                line += 1
+
         return acc
 
+    def check(self, key, to):
+        acc = 0
+        line = 0
+        visited = []
+        while line < len(self.data):
+            if line in visited:
+                break
+
+            visited.append(line)
+
+            if line == key and to == 'nop':
+                line += 1
+                continue
+
+            if self.data[line]['c'] == 'acc':
+                acc += self.data[line]['v']
+
+            if self.data[line]['c'] == 'jmp' or (line == key and to == 'jmp'):
+                line += self.data[line]['v']
+            else:
+                line += 1
+
+        if line >= len(self.data):
+            return acc
+        else:
+            return 0
+
     def part2(self):
-        pass
+        jmps = [line for line, v in enumerate(self.data) if v['c'] == 'jmp']
+        nops = [line for line, v in enumerate(self.data) if v['c'] == 'nop']
+
+        for line in jmps:
+            acc = self.check(line, 'nop')
+            if acc > 0:
+                return acc
+        
+        for line in nops:
+            acc = self.check(line, 'jmp')
+            if acc > 0:
+                return acc
+        
+        return 'Not Found!'
+
 
 
 if __name__ == '__main__':
