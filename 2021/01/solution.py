@@ -5,21 +5,18 @@ class Solution:
     day = 1
     input: str
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         self.data = [*map(int, self.input.split("\n"))]
 
-
     def part1(self, data=None):
         if data is None: data = self.data
         return sum(data[i + 1] > data[i] for i in range(len(data) - 1))
-
 
     def part2(self):
         chunk = [a + b + c for a, b, c in zip(self.data, self.data[1::], self.data[2::])]

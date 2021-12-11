@@ -5,12 +5,11 @@ class Solution:
     day = 8
     input: str
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         self.data = [
@@ -28,15 +27,12 @@ class Solution:
         if 2 <= len(data) <= 4 or len(data) == 7:
             return True
 
-
     def part1(self):
         inp = [x for row in self.data for x in row[1]]
         return sum([1 for x in inp if self.part1Cond(x)])
 
-
     def part2Cond(self, data, i):
         return {ch for ch in list(x for x in data if len(x) == i)[0]}
-
 
     def part2(self):
         summ = 0

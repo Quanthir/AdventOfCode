@@ -13,16 +13,13 @@ class Solution:
     P1_POINTS = {')': 3, ']': 57, '}': 1197, '>': 25137}
     P2_POINTS = {')': 1, ']': 2, '}': 3, '>': 4}
 
-
-    def __init__(self):
-        with open('./input.txt') as f:
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
 
-
     def prepare_data(self):
         self.data = self.input.split("\n")
-
 
     def interpret(self):
         errors = {')': 0, ']': 0, '}': 0, '>': 0}
@@ -45,11 +42,9 @@ class Solution:
         
         return errors, openings
 
-
     def part1(self):
         errors, _ = self.interpret()
         return sum(v * self.P1_POINTS[k] for k, v in errors.items())
-
 
     def part2(self):
         _, openings = self.interpret()

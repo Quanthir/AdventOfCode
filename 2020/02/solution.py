@@ -7,21 +7,18 @@ class Solution:
     day = 2
     input: str
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         data = [re.match(r'(\d+)-(\d+) (\w): (\w+)', x).groups() for x in self.input.split("\n")]
         self.data = [[int(x[0]), int(x[1]), x[2], x[3]] for x in data]
 
-
     def part1(self):
         return sum(x[0] <= x[3].count(x[2]) <= x[1] for x in self.data)
-
 
     def part2(self):
         puz = lambda p1, p2, c, s: (s[p1] == c or s[p2] == c) and s[p1] != s[p2]

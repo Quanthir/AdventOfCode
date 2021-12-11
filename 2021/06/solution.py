@@ -5,16 +5,14 @@ class Solution:
     day = 6
     input: str
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
 
-
     def prepare_data(self):
         self.data = [int(x) for x in self.input.split(',')]
-
 
     def solution(self, days: int) -> int:
         f = [*map(self.input.count, '012345678')]
@@ -25,10 +23,8 @@ class Solution:
 
         return sum(f)
 
-
     def part1(self):
         return self.solution(80)
-
 
     def part2(self):
         return self.solution(256)

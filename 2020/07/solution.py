@@ -12,12 +12,11 @@ class Solution:
 
     class Bag:
         bags = []
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         self.data = self.input.split("\n")
@@ -48,7 +47,6 @@ class Solution:
         self.holdsgold = set()
         self.check('shiny gold')
         return len(self.holdsgold)
-
 
     def part2(self):
         return self.cost('shiny gold')

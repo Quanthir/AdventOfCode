@@ -1,25 +1,44 @@
 #!/usr/bin/env python3
 
 import argparse
-from os import error, mkdir
 import os
 from template import solution
+from importlib import import_module
 
 START_YEAR = 2015
 CURRENT_YEAR = 2021
 MAX_DAY = 25
 
+
+class tc:
+    HEADER = '\033[95m'
+    BLUE = '\033[94m'
+    CYAN = '\033[96m'
+    GREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    ULINE = '\033[4m'
+
+def get_dir(year, day):
+    """ Returns the dir of given year and day
+    """
+    year_dir = os.path.join(os.curdir, str(year))
+    day_dir = os.path.join(year_dir, str(day).zfill(2))
+    return year_dir, day_dir
+
 def create_new_day(year, day):
     """ Creates new day for the given year
     """
-    year_dir = os.path.join(os.curdir, str(year))
+    year_dir, day_dir = get_dir(year, day)
 
     if not os.path.isdir(year_dir):
-        mkdir(year_dir)
+        os.mkdir(year_dir)
 
     if day == 0:
-        days = [int(x) for x in filter(
-            os.path.isdir, os.listdir(year_dir))].sort()
+        days = [int(x) for x in filter(os.path.isdir, os.listdir(year_dir))]
+        days.sort()
         day = days[-1]
 
         if day >= MAX_DAY:
@@ -28,7 +47,7 @@ def create_new_day(year, day):
     day_dir = os.path.join(year_dir, str(day).zfill(2))
 
     if not os.path.isdir(day_dir):
-        mkdir(day_dir)
+        os.mkdir(day_dir)
     else:
         return False, f'{day_dir} is already created before! Override is not implemented yet!'
     
@@ -41,16 +60,28 @@ def create_new_day(year, day):
     
     os.system(f'chmod +x {day_dir}/solution.py')
     
-    return True, f'{day_dir} folder has been created and ready to use.'
+    return True, f'{tc.BLUE} {day_dir}{tc.ENDC} folder has been created and ready to use.'
         
-        
+def run(year, day):
+    _, folder = get_dir(year, day)
+    mod = import_module(f'{year}.{str(day).zfill(2)}.solution', __name__)
+    klass = getattr(mod, 'Solution')
+    solution = klass(folder)
+    print(
+        f'{tc.HEADER}Advent of Code Code Challenge '+
+        f'{{ year => {tc.GREEN + tc.ULINE + str(year) + tc.ENDC + tc.HEADER}, '+
+        f'day => {tc.GREEN + tc.ULINE + str(day).zfill(2) + tc.ENDC + tc.HEADER} }}{tc.ENDC}'
+    )
+    print(f'Solution Part {tc.BLUE}[1]{tc.ENDC}: {tc.GREEN}{solution.part1()}{tc.ENDC}')
+    print(f'Solution Part {tc.BLUE}[2]{tc.ENDC}: {tc.GREEN}{solution.part2()}{tc.ENDC}')
 
 
 def main():
     parser = argparse.ArgumentParser(description='Advent Of Code Solutions by Gökhan Öztürk')
     parser.add_argument('year', metavar='year', type=int, default=CURRENT_YEAR, help='Event year')
     parser.add_argument('day', metavar='day', type=int, default=0, help='Event day')
-    parser.add_argument('--create', action='store_true', help='Creates a new day. If year is not given, last year is being used.')
+    parser.add_argument('-c', '--create', action='store_true', help='Creates a new day')
+    parser.add_argument('-r', '--run', action='store_true', help='Runs the given day in the given year.')
 
     args = parser.parse_args()
     
@@ -68,6 +99,10 @@ def main():
             parser.error(text)
         else:
             print(text)
+        return
+    
+    if args.run:
+        run(args.year, args.day)
         return
     
 

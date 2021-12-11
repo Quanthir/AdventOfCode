@@ -5,16 +5,14 @@ class Solution:
     day = 2
     input: str
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
 
-
     def prepare_data(self):
         self.data = [[x for x in line.split()] for line in self.input.split("\n")]
-
 
     def part1(self):
         height = 0

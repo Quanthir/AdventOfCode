@@ -9,16 +9,14 @@ class Solution:
     day = 8
     input: str
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
 
-
     def prepare_data(self):
         self.data = [{'c': line[:3], 'v': int(line[4:])} for line in self.input.split("\n")]
-
 
     def part1(self):
         visited = []
@@ -39,7 +37,6 @@ class Solution:
                 i += 1
         
         return acc
-
 
     def part2(self):
         pass

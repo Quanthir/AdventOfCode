@@ -8,21 +8,18 @@ class Solution:
     day = 4
     input: str
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         self.data = [x.replace("\n", " ") for x in self.input.split("\n\n")]
 
-
     def part1(self):
         valids = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
         return sum(all(x in p for x in valids) for p in self.data)
-
 
     def part2(self):
         tests = [

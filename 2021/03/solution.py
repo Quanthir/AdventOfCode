@@ -5,16 +5,14 @@ class Solution:
     day = 3
     input: str
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
 
-
     def prepare_data(self):
         self.data = self.input.split("\n")
-
 
     def part1(self):
         high, low = '', ''
@@ -34,7 +32,6 @@ class Solution:
         
         return int(high, 2) * int(low, 2)
 
-
     @classmethod
     def finder(cls, data, i, find):
         if len(data) == 1: return data
@@ -53,7 +50,6 @@ class Solution:
             return cls.finder(p1 if len(p1) > len(p0) else p0, i + 1, find)
         else:
             return cls.finder(p0 if len(p0) < len(p1) else p1, i + 1, find)
-
 
     def part2(self):
         most = self.finder(self.data, 0, 'most')

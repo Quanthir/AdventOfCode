@@ -5,12 +5,11 @@ class Solution:
     day = 11
     input: str
     data: dict
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         self.data = {

@@ -6,19 +6,16 @@ class Solution:
     input: str
     data: list
     
-    def __init__(self):
-        with open('./input.txt') as f:
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         self.data = [int(x) for x in self.input.split("\n")]
 
-
     def part1(self):
         return next(x * y for x in self.data for y in self.data if x + y == 2020)
-
 
     def part2(self):
         return next(

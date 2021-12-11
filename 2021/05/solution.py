@@ -10,12 +10,11 @@ class Solution:
     day = 5
     input: str
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         data = [
@@ -26,7 +25,6 @@ class Solution:
             for line in self.input.split("\n")
         ]
         self.data = [Line(Point(*row[0]), Point(*row[1])) for row in data]
-
 
     @staticmethod
     def generate_points(line: Line, horizontal = False) -> Point:
@@ -61,7 +59,6 @@ class Solution:
 
                 yield Point(x, y)
 
-
     def solution(self, horizontal = False) -> int:
         matrix = {}
         count = 0
@@ -75,10 +72,8 @@ class Solution:
 
         return count
 
-
     def part1(self):
         return self.solution(False)
-
 
     def part2(self):
         return self.solution(True)

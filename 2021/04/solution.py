@@ -6,12 +6,11 @@ class Solution:
     input: str
     drawn: list
     data: list
-    
-    def __init__(self):
-        with open('./input.txt') as f:
+
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         data = self.input.split("\n\n")
@@ -23,7 +22,6 @@ class Solution:
             ]
             for line in data[1:]
         ]
-
 
     def solution(self, part = 'part1'):
         seen, won, scores = [], [], []
@@ -50,10 +48,8 @@ class Solution:
         else:
             return scores[-1]
 
-
     def part1(self):
         return self.solution('part1')
-
 
     def part2(self):
         return self.solution('part2')

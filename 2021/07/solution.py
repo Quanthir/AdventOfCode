@@ -6,19 +6,16 @@ class Solution:
     input: str
     data: list
 
-    def __init__(self):
-        with open('./input.txt') as f:
+    def __init__(self, folder='.'):
+        with open(f'{folder}/input.txt') as f:
             self.input = f.read()
         self.prepare_data()
-
 
     def prepare_data(self):
         self.data = [*map(int, self.input.split(","))]
 
-
     def part1(self):
         return min([sum([abs(targetPos - crab) for crab in self.data]) for targetPos in range(max(*self.data))])
-
 
     def part2(self):
         f = lambda n: n * (n + 1) // 2
