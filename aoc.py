@@ -75,6 +75,14 @@ def run(year, day):
     print(f'Solution Part {tc.BLUE}[1]{tc.ENDC}: {tc.GREEN}{solution.part1()}{tc.ENDC}')
     print(f'Solution Part {tc.BLUE}[2]{tc.ENDC}: {tc.GREEN}{solution.part2()}{tc.ENDC}')
 
+def info(year, day, parser):
+    _, folder = get_dir(year, day)
+    if not os.path.isdir(folder):
+        parser.error(f'Directory does not exists: {folder}')
+    
+    with open(f'{folder}/challenge.txt') as f:
+        print(f.read())
+        
 
 def main():
     parser = argparse.ArgumentParser(description='Advent Of Code Solutions by Gökhan Öztürk')
@@ -82,6 +90,7 @@ def main():
     parser.add_argument('day', metavar='day', type=int, default=0, help='Event day')
     parser.add_argument('-c', '--create', action='store_true', help='Creates a new day')
     parser.add_argument('-r', '--run', action='store_true', help='Runs the given day in the given year.')
+    parser.add_argument('-i', '--info', action='store_true', help='Prints the challenge info of given year and day.')
 
     args = parser.parse_args()
     
@@ -104,6 +113,9 @@ def main():
     if args.run:
         run(args.year, args.day)
         return
+    
+    if args.info:
+        info(args.year, args.day, parser)
     
 
 if __name__ == '__main__':
