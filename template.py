@@ -11,14 +11,11 @@ class Solution:
             self.input = f.read()
         self.prepare_data()
 
-
     def prepare_data(self):
         pass
 
-
     def part1(self):
         pass
-
 
     def part2(self):
         pass
