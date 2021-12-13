@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from pprint import pprint
-
 
 class Solution:
     year = 2021
@@ -29,7 +27,6 @@ class Solution:
     def part1(self):
         return len(self.fold(self.data, *self.folds[0]))
 
-
     def part2(self):
         self.prepare_data()
         data = self.data
@@ -41,10 +38,7 @@ class Solution:
         paper = ['' for _ in range(max_y)]
         for y in range(max_y):
             for x in range(max_x):
-                if (x, y) in data:
-                    paper[y] += '#'
-                else:
-                    paper[y] += '.'
+                paper[y] += '#' if (x, y) in data else '.'
         
         for line in paper:
             print(line)
