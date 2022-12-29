@@ -13,13 +13,18 @@ class Solution:
         self.prepare_data()
 
     def prepare_data(self):
-        pass
+        self.input = self.input.split("\n\n")
 
     def part1(self):
-        pass
+        self.elfs = []
+        for bucket in self.input:
+            points = [int(x) for x in bucket.split("\n")]
+            self.elfs.append(sum(points))
+
+        return max(self.elfs)
 
     def part2(self):
-        pass
+        return sum(sorted(self.elfs, reverse=True)[:3])
 
 
 if __name__ == "__main__":
