@@ -5,7 +5,7 @@ class Solution:
     day = <day>
     input: str
     data: list
-    
+
     def __init__(self, folder='.'):
         with open(f'{folder}/input.txt') as f:
             self.input = f.read()
