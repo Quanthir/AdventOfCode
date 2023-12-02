@@ -7,7 +7,7 @@ from importlib import import_module
 from template import solution
 
 START_YEAR = 2015
-CURRENT_YEAR = 2022
+CURRENT_YEAR = 2023
 MAX_DAY = 25
 
 
