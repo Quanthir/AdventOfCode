@@ -32,6 +32,13 @@ Example:
 ./aoc.py -c 2023 1
 ```
 
+Creates 3 files in the `<year>/<day>` folder.
+
+- `challenge.txt`: Copy/Paste the puzzle text parts in this file to easy access.
+- `input.txt`: The input text that is given to you for that day.
+- `solution.py`: The Python file to solve the puzzle. Automatically reads the `input.txt` file.
+
+
 ### Run the solution file
 
 ```sh
