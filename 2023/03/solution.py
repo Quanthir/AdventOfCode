@@ -7,7 +7,6 @@ class Solution:
     day = 3
     input: str
     data: list
-    re = re.compile(r"\d+")
 
     def __init__(self, folder="."):
         with open(f"{folder}/input.txt") as f:
@@ -19,11 +18,8 @@ class Solution:
 
     def find_numbers(self, line):
         """Generator to find numbers on each line"""
-        end = 0
-        while m := self.re.search(line, end):
-            start = max(m.start() - 1, 0)
-            end = m.end() + 1
-            yield start, min(end, len(line) - 1), int(m[0])
+        for m in re.finditer(r"\d+", line):
+            yield max(m.start() - 1, 0), min(m.end() + 1, len(line) - 1), int(m.group())
 
     def get_coords(self, y, start, end, check):
         """Get the coords if the number has any symbols adjacent to it"""
