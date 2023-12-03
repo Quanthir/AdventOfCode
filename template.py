@@ -12,7 +12,7 @@ class Solution:
         self.prepare_data()
 
     def prepare_data(self):
-        self.data = self.input.split("\n")
+        self.data = self.input.split("\\n")
 
     def part1(self):
         return "Unknown"
