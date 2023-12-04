@@ -28,10 +28,7 @@ class Solution:
 
     def part1(self):
         return sum(
-            # ``count + 2 ** (count - 1)`` doesn't work because ``2**0 = 1``
-            # if count is 1, the result must be 1.
-            # The statement above results with ``2``
-            count if count == 1 else 2 ** (count - 1)
+            2 ** (count - 1)
             for count in self.data
             if count > 0
         )
@@ -44,8 +41,8 @@ class Solution:
             if count > 0
             for j in range(i + 1, i + 1 + count)
         )
-        for i, add in generator:
-            result[i] += add
+        for i, copies in generator:
+            result[i] += copies
 
         return sum(result)
 
