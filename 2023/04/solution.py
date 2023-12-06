@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 class Solution:
     year = 2023
     day = 4
@@ -18,7 +19,7 @@ class Solution:
         for i, line in enumerate(self.input):
             left, right = line[10:].split(" | ")
 
-            if (count := len(set(left.split()) & set(right.split()))):
+            if count := len(set(left.split()) & set(right.split())):
                 self.solution1 += 2 ** (count - 1)
 
             for j in range(count):
