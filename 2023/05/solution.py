@@ -1,6 +1,36 @@
 #!/usr/bin/env python3
 
 
+class Map:
+    def __init__(self, data):
+        self.data = [tuple(map(int, line.split())) for line in data.split("\n")[1:]]
+
+    def part1(self, seed):
+        for dest, src, rng in self.data:
+            if src <= seed < src + rng:
+                return seed + dest - src
+        return seed
+
+    def part2(self, seeds):
+        result = []
+        for dest, src, sz in self.data:
+            src_end = src + sz
+            ranges = []
+            while seeds:
+                (st, end) = seeds.pop()
+                before = (st, min(end, src))
+                inter = (max(st, src), min(src_end, end))
+                after = (max(src_end, st), end)
+                if before[1] > before[0]:
+                    ranges.append(before)
+                if inter[1] > inter[0]:
+                    result.append((inter[0] - src + dest, inter[1] - src + dest))
+                if after[1] > after[0]:
+                    ranges.append(after)
+            seeds = ranges
+        return result + seeds
+
+
 class Solution:
     year = 2023
     day = 5
@@ -15,49 +45,26 @@ class Solution:
     def prepare_data(self):
         data = self.input.split("\n\n")
         self.seeds = [int(x) for x in data.pop(0)[7:].split(" ")]
-
-        self.maps = [
-            [tuple(map(int, line.split())) for line in m.split("\n")[1:]] for m in data
-        ]
+        self.maps = [Map(m) for m in data]
 
     def part1(self):
         results = []
         for seed in self.seeds:
             for m in self.maps:
-                for dest, src, rng in m:
-                    if src <= seed <= src + rng:
-                        seed = seed + dest - src
-                        break
+                seed = m.part1(seed)
             results.append(seed)
-
         return min(results)
 
-    def find_seed(self, m, seed_start, seed_range, seeds, is_last=False):
-        for dest, src, rng in m:
-            if src <= seed_start <= src + rng:
-                diff = (seed_start + seed_range) - (src + rng)
-                if diff > 0 and not is_last:
-                    seeds.append((seed_start + dest - src, min(diff, rng)))
-                    self.find_seed(m, seed_start + rng, diff, seeds)
-                else:
-                    seeds.append(
-                        (seed_start + dest - src, seed_range)
-                        if not is_last
-                        else seed_start + dest - src
-                    )
-                break
-
     def part2(self):
+        results = []
         seeds = list(zip(self.seeds[::2], self.seeds[1::2]))
-        last_i = len(self.maps) - 1
-        for i, m in enumerate(self.maps):
-            new_seeds = []
-            for seed_start, seed_range in seeds:
-                self.find_seed(m, seed_start, seed_range, new_seeds, i == last_i)
+        for st, sz in seeds:
+            res = [(st, st + sz)]
+            for m in self.maps:
+                res = m.part2(res)
+            results.append(min(res)[0])
 
-            seeds = new_seeds
-
-        return min(seeds)
+        return min(results)
 
 
 if __name__ == "__main__":
